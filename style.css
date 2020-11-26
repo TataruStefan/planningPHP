@@ -1,0 +1,57 @@
+body {
+    background: #dfdfdf
+}
+
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 50;
+    border: 3px solid #f1f1f1;
+}
+
+.insertForm {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: green;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.insert {
+    background-color: green;
+    padding: 14px 20px;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#insertBtn {
+    display: block;
+}
+
+.main {
+    margin: 15px;
+}
+
+.borderElement {
+    border: 2px solid blue;
+    border-radius: 8px;
+    padding: 15px;
+}
