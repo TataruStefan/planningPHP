@@ -1,6 +1,6 @@
 <?php
 require_once "pdo.php";
-require_once "ProjectInput.php";
+
 
 
 $statement = $pdo->query("SELECT Title, Vision FROM Project");
@@ -36,24 +36,38 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
     </nav>
 
     <div class="main">
-        <h4>Projects</h4></br>
-        <?php foreach ($results as $item) : ?>
-            <a class=".borderElement" href="#"><?= $item->Title ?>: <?= $item->Vision ?></a><br />
-        <?php endforeach ?>
+        <h4>Projects </h4>
+        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Insert Project</button>
+        <div class="list-group overflow-auto ">
+            <?php foreach ($results as $item) : ?>
+                <a class="list-group-item list-group-item-action" href="#"><?= $item->Title ?>: <?= $item->Vision ?></a><br />
+            <?php endforeach ?>
+        </div>
     </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
 
-    <button class="insert" id="insertBtn" onclick="openInsertProject()">Insert Project</button>
-    <div class="insertForm form-popup" id="InsertProject">
-        <form method="post" >
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Insert Project</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="ProjectInput.php">
 
-            <label>Project Title</label><br />
-            <input type="text" name="Title" required /><br>
+                        <label>Project Title</label><br />
+                        <input type="text" name="Title" required /><br>
 
-            <label>Vision</label><br />
-            <input type="text" name="Vision" required /><br>
+                        <label>Vision</label><br />
+                        <textarea class="form-control" rows="10" name="Vision"></textarea><br />
 
-            <input type="submit" onclick="closeInsertProject()" />
-        </form>
+                        <input type="submit" class="btn btn-default" onclick="closeInsertProject()" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
 </body>
 

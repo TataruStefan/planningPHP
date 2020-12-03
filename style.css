@@ -48,6 +48,8 @@ input[type=text] {
 
 .main {
     margin: 15px;
+    overflow-y: auto;
+    height: 200px;
 }
 
 .borderElement {
