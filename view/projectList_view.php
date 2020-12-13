@@ -1,13 +1,3 @@
-<?php
-require_once "pdo.php";
-
-
-
-$statement = $pdo->query("SELECT Title, Vision FROM Project");
-$statement->execute();
-$results = $statement->fetchAll(PDO::FETCH_OBJ);
-
-?>
 <!doctype html>
 <html>
 
@@ -54,7 +44,7 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
                     <h4 class="modal-title">Insert Project</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="ProjectInput.php">
+                    <form method="post" >
 
                         <label>Project Title</label><br />
                         <input type="text" name="Title" required /><br>
@@ -62,7 +52,7 @@ $results = $statement->fetchAll(PDO::FETCH_OBJ);
                         <label>Vision</label><br />
                         <textarea class="form-control" rows="10" name="Vision"></textarea><br />
 
-                        <input type="submit" class="btn btn-default" onclick="closeInsertProject()" />
+                        <input type="submit" class="btn btn-default"  />
                     </form>
                 </div>
             </div>
