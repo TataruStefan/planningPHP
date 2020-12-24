@@ -12,7 +12,7 @@ $pdo = new PDO("mysql:host=kunet;dbname=$db_name", $db_user, $db_password);
 function getAllProjects()
 {
     global $pdo;
-    $statement = $pdo->query("SELECT Title, Vision FROM Project");
+    $statement = $pdo->query("SELECT projectid, title, vision FROM Project");
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Project');
 }
