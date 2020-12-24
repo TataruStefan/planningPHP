@@ -5,3 +5,10 @@ body {
 .listP {
     position: fixed;
 }
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 50px;
+}

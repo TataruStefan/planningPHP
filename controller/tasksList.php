@@ -1,5 +1,5 @@
 <?php
-require_once("../model/project.php");
+require_once("../model/tasks.php");
 require_once("../model/dataAccess.php");
 
 
@@ -15,7 +15,7 @@ if(isset($_REQUEST["Title"]))
     addProject($project);
   }
 
-$projects = getAllProjects();
+$tasks = getTasksByProjectID($_REQUEST["projectID"]);
 
 require_once("../view/projectList_view.php");
 ?>
