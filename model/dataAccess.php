@@ -22,3 +22,28 @@ function addProject($project)
     $pdo->prepare("INSERT INTO Project (Title,Vision) VALUES (?,?)")
         ->execute([$project->title,$project->vision]);
 }
+ 
+function getTasksByProjectID($projectID)
+{
+    global $pdo;
+    $statement = $pdo->prepare('SELECT taskid, title, name as status 
+                                FROM Tasks 
+                                INNER JOIN Status 
+                                ON Tasks.statusID = Status.statusId 
+                                WHERE projectid= ?');
+    $statement->execute([$projectID]);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Task');
+}
+function getprojectbyID($projectID)
+{
+    global $pdo;
+    $statement = $pdo->prepare("SELECT projectid, title, vision FROM Project WHERE projectid= ?");
+    $statement->execute([$projectID]);
+    return $statement->fetchObject('Project');
+}
+function addTask($task)
+{
+    global $pdo;
+    $pdo->prepare("INSERT INTO Tasks (projectID,title, description, statusid, assigneeid) VALUES (?,?,?,3,1)")
+        ->execute([$task->projectid,$task->title, $task->description]);
+}

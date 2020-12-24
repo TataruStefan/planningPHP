@@ -1,21 +1,26 @@
 <?php
-require_once("../model/tasks.php");
+require_once("../model/task.php");
+require_once("../model/project.php");
 require_once("../model/dataAccess.php");
+
 
 
 if(isset($_REQUEST["Title"]))
   {
     $title = $_REQUEST["Title"];
-    $vision = $_REQUEST["Vision"];
+    $description = $_REQUEST["Description"];
+    $projectid = $_REQUEST["projectID"];
 
-    $project = new Project();
-    $project->title = htmlentities($title);
-    $project->vision = htmlentities($vision);
+    $task = new Task();
+    $task->title = htmlentities($title);
+    $task->description = htmlentities($description);
+    $task->projectid = htmlentities($projectid);
 
-    addProject($project);
+    addTask($task);
   }
 
 $tasks = getTasksByProjectID($_REQUEST["projectID"]);
+$project= getprojectbyID($_REQUEST["projectID"]);
 
-require_once("../view/projectList_view.php");
+require_once("../view/tasksList_view.php");
 ?>
