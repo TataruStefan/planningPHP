@@ -14,7 +14,7 @@
         <h2><?= $project->title ?></h2>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="../controller/projectList.php">Home</a>
+        <a class="navbar-brand btn btn-light" href="../controller/projectList.php">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,16 +22,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Vision <span class="sr-only">(current)</span></a>
+                    <a class="nav-link btn btn-light" href="#">Vision <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Progress</a>
+                    <a class="nav-link btn btn-light" href="#">Progress</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
+                    <a class="nav-link btn btn-light" href="#">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#insertTask" >New Task</a>
+                    <a class="nav-link btn btn-light" data-toggle="modal" data-target="#insertTask" >New Task</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -50,8 +50,8 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= $task->title ?></h5>
                     <p class="card-text"> <?= $task->status ?></p>
-                    <form method="post" action="#">
-                        <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
+                    <form method="post" action="taskPage.php">
+                        <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
                         <button type="submit" class="btn btn-dark card-link">Select</button>
                     </form>
                 </div>
@@ -85,7 +85,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

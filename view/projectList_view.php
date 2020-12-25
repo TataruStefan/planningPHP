@@ -14,7 +14,7 @@
         <h2>Planning ST</h2>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Projects</a>
+        <a class="navbar-brand btn btn-light" href="">Projects</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,13 +22,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Progress <span class="sr-only">(current)</span></a>
+                    <a class="nav-link btn btn-light" href="#">Progress <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My Tasks</a>
+                    <a class="nav-link btn btn-light" href="#">My Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Friends</a>
+                    <a class="nav-link btn btn-light" href="#">Friends</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
