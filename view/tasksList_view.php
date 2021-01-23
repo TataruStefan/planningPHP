@@ -10,11 +10,12 @@
 </head>
 
 <body>
-    <div>
+    <div class="d-flex justify-content-center">
         <h2><?= $project->title ?></h2>
     </div>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand btn btn-light" href="../controller/projectList.php">Home</a>
+        <a class="navbar-brand btn btn-light" href="../controller/projectList.php">Projects</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,32 +26,31 @@
                     <a class="nav-link btn btn-light" href="#">Vision <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light" href="#">Progress</a>
+                    <a class="nav-link btn btn-light" href="progress.php">Progress</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-light" href="#">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light" data-toggle="modal" data-target="#insertTask" >New Task</a>
+                    <a class="nav-link btn btn-light" data-toggle="modal" data-target="#insertTask">New Task</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method="post">
+                <input type="hidden" name="projectID" value="<?= $_REQUEST["projectID"] ?>">
+                <input class="form-control mr-sm-2" type="search" name="taskName" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
-    
-    
 
-<!--list of tasks--> 
-    <div class="d-flex flex-row flex-wrap">
+    <!--list of tasks-->
+    <div class="d-flex flex-row flex-wrap justify-content-around">
         <?php foreach ($tasks as $task) : ?>
-            <div class="card" style="width: 18rem;">
+            <div class="card m-2" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title"><?= $task->title ?></h5>
                     <p class="card-text"> <?= $task->status ?></p>
-                    <form method="post" action="taskPage.php">
+                    <form class="d-flex justify-content-end" method="post" action="taskPage.php">
                         <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
                         <button type="submit" class="btn btn-dark card-link">Select</button>
                     </form>
@@ -60,7 +60,7 @@
     </div>
 
 
- <!--Modal Form-->
+    <!--Modal Form-->
     <div class="modal fade" id="insertTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
