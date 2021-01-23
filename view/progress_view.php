@@ -45,12 +45,12 @@
             <div class="card m-2" style="width: 30rem;">
                 <div class="card-body ">
                     <h5 class="card-title"><?= $project->Title ?></h5>
-                    <div class="progress" style="height: 30px;">
+                    <div class="progress mb-2" style="height: 30px;">
                         <div class="progress-bar" role="progressbar" style="width: <?= $project->done ?>%" aria-valuenow="<?= $project->done ?>" aria-valuemin="0" aria-valuemax="100">DONE <?= $project->done ?>%</div>
                         <div class="progress-bar bg-success" role="progressbar" style="width: <?= $project->inProgress ?>%" aria-valuenow="<?= $project->inProgress ?>" aria-valuemin="0" aria-valuemax="100">IN PROGRESS <?= $project->inProgress ?>%</div>
                         <div class="progress-bar bg-info" role="progressbar" style="width: <?= $project->toDo ?>%" aria-valuenow="<?= $project->toDo ?>" aria-valuemin="0" aria-valuemax="100">TO DO <?= $project->toDo ?>%</div>
                     </div>
-                    <form method="post" action="../controller/tasksList.php">
+                    <form class="d-flex justify-content-end" method="post" action="../controller/tasksList.php">
                         <input type="hidden" name="projectID" value="<?= $project->projectID ?>">
                         <button type="submit" class="btn btn-dark card-link">Select</button>
                     </form>

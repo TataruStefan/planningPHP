@@ -13,26 +13,28 @@
     <div class="d-flex justify-content-center">
         <h2><?= $project->title ?></h2>
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand btn btn-light" href="../controller/projectList.php">Projects</a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link btn btn-light" href="#">Vision <span class="sr-only">(current)</span></a>
+            <ul class="nav nav-tabs">
+                <li li class="nav-item">
+                    <a class="nav-link btn-lg btn-light" href="projectList.php">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light" href="progress.php">Progress</a>
+                    <a class="nav-link btn-lg btn-light" href="progress.php">Progress</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light" href="#">Team</a>
+                    <button type="submit" class="nav-link btn-lg btn-light" data-toggle="modal" data-target="#editVision">Vision</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light" data-toggle="modal" data-target="#insertTask">New Task</a>
+                    <button type="submit" class="nav-link btn-lg btn-light" data-toggle="modal" data-target="#team">Team</button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-lg btn-light" data-toggle="modal" data-target="#insertTask">New Task</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post">
@@ -80,6 +82,74 @@
                         <textarea class="form-control" rows="6" name="Description"></textarea><br />
 
                         <input type="submit" class="btn btn-success" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Form Edit Vision-->
+    <div class="modal fade" id="editVision" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><?= $project->title ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                        <label>Description</label><br />
+                        <textarea class="form-control" rows="6" name="vision"><?= $project->vision ?></textarea><br />
+                        <input type="submit" class="btn btn-success" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Form Edit Team-->
+    <div class="modal fade" id="team" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Team :<?= $project->title ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($team as $member) : ?>
+                                    <tr>
+                                        <td><?= $member->name ?></td>
+                                        <td><?= $member->role ?></td>
+                                        <td><?= $member->email ?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                        <div>
+                            <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="To add member enter email">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>
+                            <select class="custom-select my-1 mr-sm-2" name="roleID" id="inlineFormCustomSelectPref">
+                                <?php foreach ($roles as $role) : ?>
+                                    <option value=<?= $role->roleID ?>><?= $role->name ?></option>
+                                <?php endforeach ?>
+                            </select>
+
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
                     </form>
                 </div>
             </div>

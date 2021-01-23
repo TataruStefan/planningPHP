@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <script src="javascript.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,21 +14,23 @@
         <h2><?= $project->title ?></h2>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <form method="post" action="../controller/tasksList.php">
-            <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
-            <button type="submit" class="btn-lg btn-light card-link">Project</button>
-        </form>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <button class="btn btn-light card-link">Assignee<span class="sr-only">(current)</span></button>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="nav nav-tabs">
+                <li li class="nav-item">
+                    <form method="post" action="../controller/tasksList.php">
+                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                        <button type="submit" class="btn-lg btn-light nav-link">Project</button>
+                    </form>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-light card-link" data-toggle="modal" data-target="#editStatus">Status</button>
+                    <button class="btn-lg btn-light nav-link">Assignee</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn-lg btn-light nav-link" data-toggle="modal" data-target="#editStatus">Status</button>
                 </li>
             </ul>
         </div>

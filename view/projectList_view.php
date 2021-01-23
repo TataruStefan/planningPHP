@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <script src="javascript.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -35,8 +34,6 @@
                 <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#insertProject">
                     New Project
                 </button>
-                <li>
-                </li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0">

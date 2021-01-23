@@ -109,13 +109,49 @@ function getProjectsProgress()
                                             ) INPROGRESS ON Tasks.projectID = INPROGRESS.projectID
                                 group by projectID");
     $statement->execute();
-    $results=$statement->fetchAll(PDO::FETCH_CLASS, 'Progress');
-    foreach($results as $project){
-        $sum= $project->toDo + $project->done + $project->inProgress;
-        $project->toDo= round($project->toDo*100/$sum);
-        $project->done= round($project->done*100/$sum);
-        $project->inProgress= round($project->inProgress*100/$sum);
-
+    $results = $statement->fetchAll(PDO::FETCH_CLASS, 'Progress');
+    foreach ($results as $project) {
+        $sum = $project->toDo + $project->done + $project->inProgress;
+        $project->toDo = round($project->toDo * 100 / $sum);
+        $project->done = round($project->done * 100 / $sum);
+        $project->inProgress = round($project->inProgress * 100 / $sum);
     }
     return $results;
+}
+function updateProjectVision($vision, $projectID)
+{
+    global $pdo;
+    $statement = $pdo->prepare('UPDATE Project
+                                SET Vision=?
+                                WHERE ProjectID=?');
+    $statement->execute([$vision, $projectID]);
+}
+
+function getTeamByProjectID($projectID)
+{
+    global $pdo;
+    $statement = $pdo->prepare('SELECT projectID, Role.name role, User.name name, email
+                                FROM Team 
+                                INNER JOIN User 
+                                ON Team.userID = User.userID 
+                                INNER JOIN Role
+                                ON Team.roleID=Role.roleID
+                                WHERE projectid= ?');
+    $statement->execute([$projectID]);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Team');
+}
+function getAllRoles()
+{
+    global $pdo;
+    $statement = $pdo->query("  SELECT roleID, name, description 
+                                FROM Role");
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Role');
+}
+function addTeamMemberByEmail($email, $projectID, $role)
+{
+    global $pdo;
+    $pdo->prepare(" INSERT INTO Team (projectID,userID,roleID) 
+                    VALUES (?,(select userID from User where email=?),?)")
+        ->execute([$projectID, $email, $role]);
 }
