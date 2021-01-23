@@ -118,6 +118,44 @@ function getProjectsProgress()
     }
     return $results;
 }
+function getProjectProgressByID($projectID)
+{
+    global $pdo;
+    $statement = $pdo->prepare("SELECT Tasks.projectID, Project.Title, COALESCE(toDo, 0) toDo, COALESCE(done, 0) done, COALESCE(inProgress, 0) inProgress
+                                FROM Tasks
+                                INNER JOIN Project on Tasks.projectID = Project.ProjectID
+                                LEFT JOIN ( SELECT Tasks.projectID, count(name) done
+                                            FROM Tasks
+                                            INNER JOIN Status ON Tasks.statusID = Status.statusId
+                                            INNER JOIN Project on Tasks.projectID = Project.ProjectID
+                                            where name = 'done'
+                                            group by Tasks.projectID, name
+                                            ) DONE ON Tasks.projectID = DONE.projectID
+                                LEFT JOIN ( SELECT Tasks.projectID, count(name) toDo
+                                            FROM Tasks
+                                            INNER JOIN Status ON Tasks.statusID = Status.statusId
+                                            INNER JOIN Project on Tasks.projectID = Project.ProjectID
+                                            where name = 'to do'
+                                            group by Tasks.projectID, name
+                                            ) TODO ON Tasks.projectID = TODO.projectID
+                                LEFT JOIN ( SELECT Tasks.projectID, count(name) inProgress
+                                            FROM Tasks
+                                            INNER JOIN Status ON Tasks.statusID = Status.statusId
+                                            INNER JOIN Project on Tasks.projectID = Project.ProjectID
+                                            where name = 'in progress'
+                                            group by Tasks.projectID, name
+                                            ) INPROGRESS ON Tasks.projectID = INPROGRESS.projectID
+                                where Tasks.projectID=?
+                                group by projectID");
+    $statement->execute([$projectID]);
+    $result = $statement->fetchObject('Progress');
+        $sum = $result->toDo + $result->done + $result->inProgress;
+        $result->toDo = round($result->toDo * 100 / $sum);
+        $result->done = round($result->done * 100 / $sum);
+        $result->inProgress = round($result->inProgress * 100 / $sum);
+    
+    return $result;
+}
 function updateProjectVision($vision, $projectID)
 {
     global $pdo;

@@ -25,7 +25,10 @@
                     <a class="nav-link btn-lg btn-light" href="projectList.php">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-lg btn-light" href="progress.php">Progress</a>
+                    <form action="progress.php" method="post">
+                        <input type="hidden" name="projectID" value="<?= $_REQUEST["projectID"] ?>">
+                        <button type="submit" class="nav-link btn-lg btn-light">Progress</button>
+                    </form>
                 </li>
                 <li class="nav-item">
                     <button type="submit" class="nav-link btn-lg btn-light" data-toggle="modal" data-target="#editVision">Vision</button>
