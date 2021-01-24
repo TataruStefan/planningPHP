@@ -27,7 +27,7 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <button class="btn-lg btn-light nav-link">Assignee</button>
+                    <button class="btn-lg btn-light nav-link" data-toggle="modal" data-target="#assignee">Assignee</button>
                 </li>
                 <li class="nav-item">
                     <button class="btn-lg btn-light nav-link" data-toggle="modal" data-target="#editStatus">Status</button>
@@ -97,6 +97,51 @@
                             <option value="3">To Do</option>
                         </select><br />
                         <input type="submit" class="btn btn-success" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Form Edit Assignee-->
+    <div class="modal fade" id="assignee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Assignee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?= $member->name ?></td>
+                                <td><?= $member->role ?></td>
+                                <td><?= $member->email ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form method="post">
+                        <div>
+                            <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>
+                            <select class="custom-select my-1 mr-sm-2" name="userID" id="inlineFormCustomSelectPref">
+                                <?php foreach ($team as $teamMember) : ?>
+                                    <option value=<?= $teamMember->userID ?>><?= $teamMember->name ?> <?= $teamMember->email ?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Change</button>
+                        </div>
                     </form>
                 </div>
             </div>

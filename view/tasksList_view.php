@@ -116,32 +116,33 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Team :<?= $project->title ?></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Team</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
-                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
-                        <table class="table">
-                            <thead>
+
+                    <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($team as $member) : ?>
                                 <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col">Email</th>
+                                    <td><?= $member->name ?></td>
+                                    <td><?= $member->role ?></td>
+                                    <td><?= $member->email ?></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($team as $member) : ?>
-                                    <tr>
-                                        <td><?= $member->name ?></td>
-                                        <td><?= $member->role ?></td>
-                                        <td><?= $member->email ?></td>
-                                    </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                        </table>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                    <form method="post">
                         <div>
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="To add member enter email">
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>

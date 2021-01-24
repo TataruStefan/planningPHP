@@ -1,6 +1,7 @@
 <?php
 class Team {
   private $projectID;
+  private $userID;
   private $role;
   private $name;
   private $email;

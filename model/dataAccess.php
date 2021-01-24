@@ -55,7 +55,7 @@ function addTask($task)
 function getTaskByID($taskid)
 {
     global $pdo;
-    $statement = $pdo->prepare('SELECT taskid,projectid, description, title, name as status
+    $statement = $pdo->prepare('SELECT taskid,projectid, description, title, name as status, assigneeID
                                 FROM Tasks
                                 INNER JOIN Status 
                                 ON Tasks.statusID = Status.statusId 
@@ -79,6 +79,14 @@ function updateTaskStatus($status, $taskid)
                                 SET statusid=?
                                 WHERE taskID=?');
     $statement->execute([$status, $taskid]);
+}
+function updateTaskAssignee($assigneeID, $taskid)
+{
+    global $pdo;
+    $statement = $pdo->prepare('UPDATE Tasks
+                                SET assigneeID=?
+                                WHERE taskID=?');
+    $statement->execute([$assigneeID, $taskid]);
 }
 function getProjectsProgress()
 {
@@ -168,7 +176,7 @@ function updateProjectVision($vision, $projectID)
 function getTeamByProjectID($projectID)
 {
     global $pdo;
-    $statement = $pdo->prepare('SELECT projectID, Role.name role, User.name name, email
+    $statement = $pdo->prepare('SELECT projectID, User.userID userID, Role.name role, User.name name, email
                                 FROM Team 
                                 INNER JOIN User 
                                 ON Team.userID = User.userID 
@@ -178,6 +186,7 @@ function getTeamByProjectID($projectID)
     $statement->execute([$projectID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Team');
 }
+
 function getAllRoles()
 {
     global $pdo;
@@ -192,4 +201,18 @@ function addTeamMemberByEmail($email, $projectID, $role)
     $pdo->prepare(" INSERT INTO Team (projectID,userID,roleID) 
                     VALUES (?,(select userID from User where email=?),?)")
         ->execute([$projectID, $email, $role]);
+}
+function getUserByID($userID){
+    global $pdo;
+    $statement = $pdo->prepare('SELECT Role.name role, User.name name, email
+                                FROM Team 
+                                INNER JOIN User 
+                                ON Team.userID = User.userID 
+                                INNER JOIN Role
+                                ON Team.roleID=Role.roleID
+                                WHERE User.userID= ?
+                                GROUP BY User.userID');
+    $statement->execute([$userID]);
+    return $statement->fetchObject('Task');
+
 }
