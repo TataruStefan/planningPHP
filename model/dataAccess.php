@@ -216,3 +216,21 @@ function getUserByID($userID){
     return $statement->fetchObject('Task');
 
 }
+function getFriendsByID($userID){
+    global $pdo;
+    $statement = $pdo->prepare('SELECT  name, email
+                                FROM User 
+                                INNER JOIN Friends 
+                                ON Friends.friendID = User.userID 
+                                WHERE Friends.userID= ?');
+    $statement->execute([$userID]);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Friend');
+
+}
+function addFriend($email, $userID){
+    global $pdo;
+    $pdo->prepare(" INSERT INTO Friends (userID,friendID) 
+                    VALUES (?,(select userID from User where email=?))")
+        ->execute([$userID, $email]);
+    
+}

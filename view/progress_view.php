@@ -31,7 +31,7 @@
                     <a class="nav-link btn-lg btn-light" href="#">My Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-lg btn-light" href="#">Friends</a>
+                    <a class="nav-link btn-lg btn-light" href="friends.php">Friends</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post">

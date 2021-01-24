@@ -29,7 +29,7 @@
                     <a class="nav-link btn-lg btn-light" href="#">My Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-lg btn-light" href="#">Friends</a>
+                    <a class="nav-link btn-lg btn-light" href="friends.php">Friends</a>
                 </li>
                 <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#insertProject">
                     New Project
