@@ -13,7 +13,7 @@
     <div class="d-flex justify-content-center">
         <h2><?= $project->title ?></h2>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex flex-column justify-content-center">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,19 +35,43 @@
             </ul>
         </div>
     </nav>
-    <div class="d-flex justify-content-center">
-        <h2><?= $task->title ?></h2>
+    <div class="d-flex flex-column justify-content-center">
+        <h2 class="d-flex justify-content-center"><?= $task->title ?></h2>
+        <h3 class="text-muted d-flex justify-content-center"><?= $task->status ?></h3>
     </div>
 
 
 
-    <!--list of tasks-->
+    <!--task description-->
     <div class="d-flex flex-row flex-wrap justify-content-center">
         <div class="card m-2" style="width: 50rem;">
             <div class="card-body">
                 <h5 class="card-title">Description</h5>
-                <h5 class="card-subtitle mb-2 text-muted"><?= $task->status ?></h5>
                 <p class="card-text"> <?= $task->description ?></p>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-dark card-link" data-toggle="modal" data-target="#editDescription">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- comment for the task-->
+    <div class="d-flex flex-row flex-wrap justify-content-center">
+        <div class="card m-2" style="width: 50rem;">
+            <div class="card-body">
+                <h5 class="card-title">Comments</h5>
+                <ul class="list-group list-group-flush">
+                    <?php foreach ($comments as $comment) : ?>
+                        <li class="list-group-item d-flex flex-row flex-wrap justify-content-between">
+                            <p>
+                                <?= $comment->text ?>
+                            </p>
+                            <p>
+                                <?= $comment->user ?>
+                            </p>
+                        </li>
+
+                    <?php endforeach ?>
+                </ul>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-dark card-link" data-toggle="modal" data-target="#editDescription">Edit</button>
                 </div>

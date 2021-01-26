@@ -2,6 +2,7 @@
 require_once("../model/task.php");
 require_once("../model/team.php");
 require_once("../model/project.php");
+require_once("../model/comment.php");
 require_once("../model/dataAccess.php");
 
 
@@ -20,8 +21,9 @@ if (isset($_REQUEST["userID"])) {
 }
 $task = getTaskByID($_REQUEST["taskID"]);
 $project = getprojectbyID($task->projectid);
-$team= getTeamByProjectID($task->projectid);
-$member=getUserByID($task->assigneeID);
+$team = getTeamByProjectID($task->projectid);
+$comments = getCommentsByTaskID($_REQUEST["taskID"]);
+$member = getUserByID($task->assigneeID);
 
 
 require_once("../view/taskPage_view.php");

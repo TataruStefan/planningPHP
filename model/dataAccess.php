@@ -234,3 +234,14 @@ function addFriend($email, $userID){
         ->execute([$userID, $email]);
     
 }
+function getCommentsByTaskID($taskID){
+    global $pdo;
+    $statement = $pdo->prepare(' SELECT COMMENTS.commentText text, User.name user 
+                                 FROM CommentTask 
+                                 INNER JOIN COMMENTS ON COMMENTS.commentID=CommentTask.commentID 
+                                 INNER JOIN User ON User.userID=COMMENTS.user 
+                                 WHERE taskID=? 
+                                 ORDER BY COMMENTS.date');
+    $statement->execute([$taskID]);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Comment');
+}
