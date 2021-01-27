@@ -20,20 +20,18 @@
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="nav nav-tabs">
                 <li li class="nav-item">
-                    <a class="nav-link active btn-lg btn-light" href="projectList.php">Projects</a>
+                    <a class="nav-link  btn-lg btn-light" href="projectList.php">Projects</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  btn-lg btn-light" href="progress.php">Progress</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-lg btn-light" href="myTasks.php">My Tasks</a>
+                    <a class="nav-link active btn-lg btn-light" href="myTasks.php">My Tasks</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn-lg btn-light" href="friends.php">Friends</a>
                 </li>
-                <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#insertProject">
-                    New Project
-                </button>
+
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
@@ -47,23 +45,33 @@
 
 
     <!-- list of projects -->
-    <div class="d-flex flex-row flex-wrap justify-content-around">
+    <div class="d-flex flex-row flex-wrap justify-content-center">
         <?php foreach ($projects as $project) : ?>
-            <div class="card m-2" style="width: 18rem;">
+            <div class="card m-2" style="width: 25rem;">
                 <div class="card-body ">
-                    <h5 class="card-title"><?= $project->title ?></h5>
-                    <p class="card-text"> <?= $project->vision ?></p>
-                    <form class="d-flex justify-content-end" method="post" action="../controller/tasksList.php">
+                    <form class="d-flex  justify-content-between" method="post" action="../controller/tasksList.php">
                         <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
-                        <button type="submit" class="btn btn-dark card-link ">Select</button>
+                        <h5 class="card-title"><?= $project->title ?></h5>
+                        <button type="submit" class="btn  btn-light card-link ">Select</button>
                     </form>
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($project->tasks as $task) : ?>
+                            <li class="list-group-item d-flex flex-row flex-wrap justify-content-between">
+
+                                <form class="d-flex justify-content-end" method="post" action="taskPage.php">
+                                    <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                                    <button type="submit" class="btn btn-lg btn-light card-link"><?= $task->title ?></button>
+                                </form>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
                 </div>
             </div>
         <?php endforeach ?>
     </div>
 
 
-    <!--Modal Form-->
+    <!-- Modal Form
     <div class="modal fade" id="insertProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -87,7 +95,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </body>
 

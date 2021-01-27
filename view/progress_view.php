@@ -28,7 +28,7 @@
                     <a class="nav-link active btn-lg btn-light" href="progress.php">Progress</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-lg btn-light" href="#">My Tasks</a>
+                    <a class="nav-link btn-lg btn-light" href="myTasks.php">My Tasks</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn-lg btn-light" href="friends.php">Friends</a>
