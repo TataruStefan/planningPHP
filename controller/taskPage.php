@@ -19,6 +19,10 @@ if (isset($_REQUEST["userID"])) {
     updateTaskAssignee($_REQUEST["userID"], $_REQUEST["taskID"]);
     $_POST["userID"] = null;
 }
+if (isset($_REQUEST["commentText"]) && $_REQUEST["commentText"]!="" ) {
+    addComment($_REQUEST["taskID"], 1,$_REQUEST["commentText"]);
+    $_POST["commentText"] = null;
+}
 $task = getTaskByID($_REQUEST["taskID"]);
 $project = getprojectbyID($task->projectid);
 $team = getTeamByProjectID($task->projectid);

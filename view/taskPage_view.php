@@ -65,6 +65,7 @@
                             <p>
                                 <?= $comment->text ?>
                             </p>
+                            <br>
                             <p>
                                 <?= $comment->user ?>
                             </p>
@@ -72,9 +73,13 @@
 
                     <?php endforeach ?>
                 </ul>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-dark card-link" data-toggle="modal" data-target="#editDescription">Edit</button>
-                </div>
+                <form method="POST">
+                    <div class="d-flex justify-content-end">
+                        <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                        <textarea class="form-control" rows="2" name="commentText" placeholder="add comment"></textarea>
+                        <button type="submit" class="btn btn-dark card-link">Send</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

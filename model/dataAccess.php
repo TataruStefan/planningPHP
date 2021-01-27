@@ -157,11 +157,11 @@ function getProjectProgressByID($projectID)
                                 group by projectID");
     $statement->execute([$projectID]);
     $result = $statement->fetchObject('Progress');
-        $sum = $result->toDo + $result->done + $result->inProgress;
-        $result->toDo = round($result->toDo * 100 / $sum);
-        $result->done = round($result->done * 100 / $sum);
-        $result->inProgress = round($result->inProgress * 100 / $sum);
-    
+    $sum = $result->toDo + $result->done + $result->inProgress;
+    $result->toDo = round($result->toDo * 100 / $sum);
+    $result->done = round($result->done * 100 / $sum);
+    $result->inProgress = round($result->inProgress * 100 / $sum);
+
     return $result;
 }
 function updateProjectVision($vision, $projectID)
@@ -202,7 +202,8 @@ function addTeamMemberByEmail($email, $projectID, $role)
                     VALUES (?,(select userID from User where email=?),?)")
         ->execute([$projectID, $email, $role]);
 }
-function getUserByID($userID){
+function getUserByID($userID)
+{
     global $pdo;
     $statement = $pdo->prepare('SELECT Role.name role, User.name name, email
                                 FROM Team 
@@ -214,9 +215,9 @@ function getUserByID($userID){
                                 GROUP BY User.userID');
     $statement->execute([$userID]);
     return $statement->fetchObject('Task');
-
 }
-function getFriendsByID($userID){
+function getFriendsByID($userID)
+{
     global $pdo;
     $statement = $pdo->prepare('SELECT  name, email
                                 FROM User 
@@ -225,23 +226,29 @@ function getFriendsByID($userID){
                                 WHERE Friends.userID= ?');
     $statement->execute([$userID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Friend');
-
 }
-function addFriend($email, $userID){
+function addFriend($email, $userID)
+{
     global $pdo;
     $pdo->prepare(" INSERT INTO Friends (userID,friendID) 
                     VALUES (?,(select userID from User where email=?))")
         ->execute([$userID, $email]);
-    
 }
-function getCommentsByTaskID($taskID){
+function getCommentsByTaskID($taskID)
+{
     global $pdo;
     $statement = $pdo->prepare(' SELECT COMMENTS.commentText text, User.name user 
-                                 FROM CommentTask 
-                                 INNER JOIN COMMENTS ON COMMENTS.commentID=CommentTask.commentID 
+                                 FROM COMMENTS  
                                  INNER JOIN User ON User.userID=COMMENTS.user 
                                  WHERE taskID=? 
                                  ORDER BY COMMENTS.date');
     $statement->execute([$taskID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Comment');
+}
+function addComment($taskID, $userID, $commentText)
+{
+    global $pdo;
+    $pdo->prepare(" INSERT INTO COMMENTS (commentText,user, date,taskID) 
+                    VALUES (?,?,now(),?)")
+        ->execute([$commentText, $userID, $taskID]);
 }
