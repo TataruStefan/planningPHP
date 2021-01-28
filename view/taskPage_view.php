@@ -55,11 +55,11 @@
         </div>
     </div>
     <!-- comment for the task-->
-    <div class="d-flex flex-row flex-wrap justify-content-center">
+    <div class="h-100 d-flex flex-row flex-wrap justify-content-center">
         <div class="card m-2" style="width: 50rem;">
             <div class="card-body">
                 <h5 class="card-title">Comments</h5>
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush overflow-auto">
                     <?php foreach ($comments as $comment) : ?>
                         <li class="list-group-item d-flex flex-row flex-wrap justify-content-between">
                             <p>

@@ -252,3 +252,22 @@ function addComment($taskID, $userID, $commentText)
                     VALUES (?,?,now(),?)")
         ->execute([$commentText, $userID, $taskID]);
 }
+function phpAlert($msg) {
+    echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+}
+function getUserByEmail($email)
+{
+    global $pdo;
+    $statement = $pdo->prepare('SELECT User.userID, email, password
+                                FROM User 
+                                INNER JOIN UserP 
+                                ON User.userID = UserP.userID 
+                                WHERE User.email= ?');
+    $statement->execute([$email]);
+    if ($statement->rowCount() > 0) {
+        return $statement->fetchObject('User');
+      } else {
+         return "empty";
+      }
+    
+}
