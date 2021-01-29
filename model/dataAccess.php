@@ -252,7 +252,8 @@ function addComment($taskID, $userID, $commentText)
                     VALUES (?,?,now(),?)")
         ->execute([$commentText, $userID, $taskID]);
 }
-function phpAlert($msg) {
+function phpAlert($msg)
+{
     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 }
 function getUserByEmail($email)
@@ -266,8 +267,27 @@ function getUserByEmail($email)
     $statement->execute([$email]);
     if ($statement->rowCount() > 0) {
         return $statement->fetchObject('User');
-      } else {
-         return "empty";
-      }
-    
+    } else {
+        return "empty";
+    }
+}
+function addNewUser($email, $password, $name, $surname)
+{
+    global $pdo;
+    $result = $pdo->prepare(" INSERT INTO User (name,surname,email) 
+                    VALUES (?,?,?)")
+        ->execute([$name, $surname, $email]);
+
+    return $result && addUserPasswordByEmail($email, $password);
+
+}
+
+function addUserPasswordByEmail($email, $password)
+{
+
+    global $pdo;
+    $passwordHash=password_hash($password, PASSWORD_DEFAULT);
+    return $pdo->prepare(" INSERT INTO UserP (userID,password) 
+                    VALUES ((select userID from User where email=?),?)")
+        ->execute([$email,$passwordHash]);
 }

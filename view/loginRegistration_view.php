@@ -50,14 +50,14 @@
                 <div class="modal-body">
                     <form method="post">
 
-                        <label for="exampleInputPassword1">Name</label>
-                        <input type="text" name="name" class="form-control form-control-sm" id="exampleInputPassword1">
-                        <label for="exampleInputPassword1">Surname</label>
-                        <input type="text" name="surname" class="form-control form-control-sm" id="">
+                        <label for="userName">Name</label>
+                        <input type="text" name="name" class="form-control form-control-sm" id="userName">
+                        <label for="surname">Surname</label>
+                        <input type="text" name="surname" class="form-control form-control-sm" id="surname">
                         <label for="inputEmail">Email</label>
-                        <input type="email" name="email" class="form-control form-control-sm" id="inputEmail" aria-describedby="emailHelp">
+                        <input type="email" name="emailR" class="form-control form-control-sm" id="inputEmail" aria-describedby="emailHelp">
                         <label for="inputPassword">Password</label>
-                        <input type="password" name="password" class="form-control form-control-sm" id="inputPassword">
+                        <input type="password" name="passwordR" class="form-control form-control-sm" id="inputPassword">
                         <div class="d-flex justify-content-center">
                             <input type="submit" class="btn btn-primary" />
                         </div>

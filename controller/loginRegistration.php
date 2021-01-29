@@ -39,4 +39,33 @@ if (isset($_REQUEST["email"]) &&  isset($_REQUEST["password"])) {
     }
 }
 
+
+// Processing registration form data when form is submitted
+if (isset($_REQUEST["emailR"]) &&  isset($_REQUEST["passwordR"])) {
+
+    // Validate username
+    if (empty(trim($_POST["emailR"]))) {
+        phpAlert("Please enter email.");
+    } else if (empty(trim($_POST["passwordR"]))) {
+        phpAlert("Please enter your password.");
+    } else {
+        // Prepare a select statement
+        $user = getUserByEmail(trim($_POST["emailR"]));
+
+        if ($user != "empty") {
+            phpAlert("Email already taken");
+        } else {
+
+            $newUser = addNewUser(trim($_POST["emailR"]), trim($_POST["passwordR"]), trim($_POST["name"]), trim($_POST["surname"]));
+
+            if (!$newUser) {
+                phpAlert("Something went wrong. Please try again later.");
+            }
+        }
+    }
+}
+
+
+
+
 require_once("../view/loginRegistration_view.php");
