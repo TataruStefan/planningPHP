@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-//     header("location: welcome.php");
-//     exit;
-// }
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    header("location: projectList.php");
+    exit;
+}
 
 require_once("../model/user.php");
 require_once("../model/dataAccess.php");
@@ -23,7 +23,7 @@ if (isset($_REQUEST["email"]) &&  isset($_REQUEST["password"])) {
 
         if ($user == "empty") {
             phpAlert("Incorrect email");
-        } else if (password_verify(trim($_POST["password"]), $user->password) || trim($_POST["password"]) == $user->password) {
+        } else if (password_verify(trim($_POST["password"]), $user->password) ) {
             // Password is correct, so start a new session
             session_start();
 
