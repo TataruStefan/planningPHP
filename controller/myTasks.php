@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"]) && !$_SESSION["loggedin"] === true) {
+    header("location: loginRegistration.php");
+    exit;
+}
 require_once("../model/project.php");
 require_once("../model/task.php");
 require_once("../model/dataAccess.php");
@@ -27,9 +32,13 @@ require_once("../model/dataAccess.php");
 
 //   $projects = getAllProjects();
 // }
-$projects = getAllProjects();
-foreach($projects as $project){
-    $project->tasks=getTasksByProjectID($project->projectid);
+$projectsTemp = getAllProjects($_SESSION["userID"]);
+$projects = array();
+foreach ($projectsTemp as $project) {
+    $project->tasks = getTasksByProjectIDAndUserID($project->projectID, $_SESSION["userID"]);
+    if (count($project->tasks) > 0) {
+        array_push($projects, $project);
+    }
 }
 
 require_once("../view/myTasks_view.php");

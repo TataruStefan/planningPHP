@@ -5,4 +5,4 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header("location: projectList.php");
     exit;
 }else{
-header("location: controller/loginRegistration.php");}
+header("location: loginRegistration.php");}

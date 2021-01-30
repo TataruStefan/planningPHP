@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"]) && !$_SESSION["loggedin"] === true) {
+  header("location: loginRegistration.php");
+  exit;
+}
 require_once("../model/task.php");
 require_once("../model/project.php");
 require_once("../model/team.php");
@@ -17,12 +22,12 @@ if (isset($_REQUEST["email"])) {
 if (isset($_REQUEST["Title"])) {
   $title = $_REQUEST["Title"];
   $description = $_REQUEST["Description"];
-  $projectid = $_REQUEST["projectID"];
+  $projectID = $_REQUEST["projectID"];
 
   $task = new Task();
   $task->title = htmlentities($title);
   $task->description = htmlentities($description);
-  $task->projectid = htmlentities($projectid);
+  $task->projectID = htmlentities($projectID);
 
   addTask($task);
 }

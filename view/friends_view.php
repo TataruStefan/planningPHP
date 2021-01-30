@@ -19,7 +19,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="nav nav-tabs">
                 <li li class="nav-item">
                     <a class="nav-link btn-lg btn-light" href="projectList.php">Projects</a>
@@ -36,6 +36,11 @@
                 <li>
                     <button type="submit" class="nav-link btn-lg btn-light" data-toggle="modal" data-target="#addFriend">Add Friend</button>
                 </li>
+            </ul>
+            <ul class="nav nav-tabs">
+                <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#logout">
+                    Log out
+                </button>
             </ul>
 
         </div>
@@ -75,6 +80,28 @@
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="To add member enter email">
                             <button type="submit" class="btn btn-primary">Add</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Form Logout-->
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">LogOut</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="logout.php">
+
+                        <P>Are you sure that you want to Log out</P>
+
+                        <button type="submit" class="btn btn-secondary" >Yes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

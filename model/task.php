@@ -1,11 +1,11 @@
 <?php
 class Task {
-  private $taskid;
-  private $projectid;
+  private $taskID;
+  private $projectID;
   private $title;
   private $description;
   private $status;
-  private $assigneeid;
+  private $assigneeID;
 
   function __get($name) {
     return $this->$name;

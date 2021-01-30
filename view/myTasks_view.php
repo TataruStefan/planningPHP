@@ -17,7 +17,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="nav nav-tabs">
                 <li li class="nav-item">
                     <a class="nav-link  btn-lg btn-light" href="projectList.php">Projects</a>
@@ -38,6 +38,11 @@
                 <input class="form-control mr-sm-2" type="search" name="title" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+            <ul class="nav nav-tabs">
+                <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#logout">
+                    Log out
+                </button>
+            </ul>
 
         </div>
     </nav>
@@ -50,7 +55,7 @@
             <div class="card m-2" style="width: 25rem;">
                 <div class="card-body ">
                     <form class="d-flex  justify-content-between" method="post" action="../controller/tasksList.php">
-                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                        <input type="hidden" name="projectID" value="<?= $project->projectID ?>">
                         <h5 class="card-title"><?= $project->title ?></h5>
                         <button type="submit" class="btn  btn-light card-link ">Select</button>
                     </form>
@@ -59,7 +64,7 @@
                             <li class="list-group-item d-flex flex-row flex-wrap justify-content-between">
 
                                 <form class="d-flex justify-content-end" method="post" action="taskPage.php">
-                                    <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                                    <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
                                     <button type="submit" class="btn btn-lg btn-light card-link"><?= $task->title ?></button>
                                 </form>
                             </li>
@@ -71,31 +76,28 @@
     </div>
 
 
-    <!-- Modal Form
-    <div class="modal fade" id="insertProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--Modal Form Logout-->
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Project</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">LogOut</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
+                    <form method="post" action="logout.php">
 
-                        <label>Project Title</label><br />
-                        <input type="text" name="Title" required /><br>
+                        <P>Are you sure that you want to Log out</P>
 
-                        <label>Vision</label><br />
-                        <textarea class="form-control" rows="10" name="Vision"></textarea><br />
-
-                        <input type="submit" class="btn btn-success" />
+                        <button type="submit" class="btn btn-secondary" >Yes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
 </body>
 

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["loggedin"]) && !$_SESSION["loggedin"] === true) {
+    header("location: loginRegistration.php");
+    exit;
+}
 require_once("../model/friend.php");
 require_once("../model/dataAccess.php");
 if (isset($_REQUEST["email"])) {

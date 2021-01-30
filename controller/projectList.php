@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["loggedin"]) && !$_SESSION["loggedin"] === true) {
+    header("location: loginRegistration.php");
+    exit;
+}
 require_once("../model/project.php");
 require_once("../model/dataAccess.php");
 
@@ -11,12 +17,12 @@ if (isset($_REQUEST["Title"])) {
   $project->title = htmlentities($title);
   $project->vision = htmlentities($vision);
 
-  addProject($project);
+  addProject($project,$_SESSION["userID"]);
 }
 
 $projects = array();
 if (isset($_REQUEST["title"]) && $_REQUEST["title"] != "") {
-  $projectsTemp = getAllProjects();
+  $projectsTemp = getAllProjects($_SESSION["userID"]);
   foreach ($projectsTemp as $project) {
     if (stripos($project->title, $_REQUEST["title"])>-1) {
       array_push($projects, $project);
@@ -24,7 +30,7 @@ if (isset($_REQUEST["title"]) && $_REQUEST["title"] != "") {
   }
 } else {
 
-  $projects = getAllProjects();
+  $projects = getAllProjects((int)$_SESSION["userID"]);
 }
 
 require_once("../view/projectList_view.php");

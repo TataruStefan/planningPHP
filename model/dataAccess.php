@@ -9,91 +9,114 @@ $db_password = "yak";
 
 $pdo = new PDO("mysql:host=kunet;dbname=$db_name", $db_user, $db_password);
 
-function getAllProjects()
+function getAllProjects($userID)
 {
     global $pdo;
-    $statement = $pdo->query("  SELECT projectid, title, vision 
-                                FROM Project");
-    $statement->execute();
+    $statement = $pdo->prepare('SELECT Project.projectID, title, vision 
+                              FROM Project
+                              INNER JOIN Team
+                              ON Team.projectID= Project.projectID
+                              WHERE Team.userID= ?');
+    $statement->execute([$userID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Project');
 }
-function addProject($project)
+function addProject($project, $userID)
 {
     global $pdo;
     $pdo->prepare(" INSERT INTO Project (Title,Vision) 
                     VALUES (?,?)")
         ->execute([$project->title, $project->vision]);
+    addTeam($pdo->lastInsertId(), $userID);
+}
+function addTeam($projectID, $userID)
+{
+    global $pdo;
+    $pdo->prepare(" INSERT INTO Team (projectID,userID,roleID) 
+                    VALUES (?,?,2)")
+        ->execute([$projectID, $userID]);
 }
 
 function getTasksByProjectID($projectID)
 {
     global $pdo;
-    $statement = $pdo->prepare('SELECT taskid, title, name as status 
+    $statement = $pdo->prepare('SELECT taskID, title, name as status 
                                 FROM Tasks 
                                 INNER JOIN Status 
                                 ON Tasks.statusID = Status.statusId 
-                                WHERE projectid= ?');
+                                WHERE projectID= ?');
     $statement->execute([$projectID]);
+    return $statement->fetchAll(PDO::FETCH_CLASS, 'Task');
+}
+function getTasksByProjectIDAndUserID($projectID,$userID)
+{
+    global $pdo;
+    $statement = $pdo->prepare('SELECT taskID, title, name as status 
+                                FROM Tasks 
+                                INNER JOIN Status 
+                                ON Tasks.statusID = Status.statusId 
+                                WHERE projectID= ? and assigneeID=?');
+    $statement->execute([$projectID, $userID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Task');
 }
 function getprojectbyID($projectID)
 {
     global $pdo;
-    $statement = $pdo->prepare("SELECT projectid, title, vision 
+    $statement = $pdo->prepare("SELECT projectID, title, vision 
                                 FROM Project 
-                                WHERE projectid= ?");
+                                WHERE projectID= ?");
     $statement->execute([$projectID]);
     return $statement->fetchObject('Project');
 }
 function addTask($task)
 {
     global $pdo;
-    $pdo->prepare(" INSERT INTO Tasks (projectID,title, description, statusid, assigneeid) 
+    $pdo->prepare(" INSERT INTO Tasks (projectID,title, description, statusID, assigneeID) 
                     VALUES (?,?,?,3,1)")
-        ->execute([$task->projectid, $task->title, $task->description]);
+        ->execute([$task->projectID, $task->title, $task->description]);
 }
-function getTaskByID($taskid)
+function getTaskByID($taskID)
 {
     global $pdo;
-    $statement = $pdo->prepare('SELECT taskid,projectid, description, title, name as status, assigneeID
+    $statement = $pdo->prepare('SELECT taskID,projectID, description, title, name as status, assigneeID
                                 FROM Tasks
                                 INNER JOIN Status 
                                 ON Tasks.statusID = Status.statusId 
-                                Where taskid= ?');
-    $statement->execute([$taskid]);
+                                Where taskID= ?');
+    $statement->execute([$taskID]);
     return $statement->fetchObject('Task');
 }
 
-function updateTaskDescription($description, $taskid)
+function updateTaskDescription($description, $taskID)
 {
     global $pdo;
     $statement = $pdo->prepare('UPDATE Tasks
                                 SET description=?
                                 WHERE taskID=?');
-    $statement->execute([$description, $taskid]);
+    $statement->execute([$description, $taskID]);
 }
-function updateTaskStatus($status, $taskid)
+function updateTaskStatus($status, $taskID)
 {
     global $pdo;
     $statement = $pdo->prepare('UPDATE Tasks
-                                SET statusid=?
+                                SET statusID=?
                                 WHERE taskID=?');
-    $statement->execute([$status, $taskid]);
+    $statement->execute([$status, $taskID]);
 }
-function updateTaskAssignee($assigneeID, $taskid)
+function updateTaskAssignee($assigneeID, $taskID)
 {
     global $pdo;
     $statement = $pdo->prepare('UPDATE Tasks
                                 SET assigneeID=?
                                 WHERE taskID=?');
-    $statement->execute([$assigneeID, $taskid]);
+    $statement->execute([$assigneeID, $taskID]);
 }
-function getProjectsProgress()
+function getProjectsProgress($userID)
 {
     global $pdo;
     $statement = $pdo->prepare("SELECT Tasks.projectID, Project.Title, COALESCE(toDo, 0) toDo, COALESCE(done, 0) done, COALESCE(inProgress, 0) inProgress
                                 FROM Tasks
                                 INNER JOIN Project on Tasks.projectID = Project.ProjectID
+                                INNER JOIN Team on Team.projectID=Project.projectID
                                 LEFT JOIN ( SELECT Tasks.projectID, count(name) done
                                             FROM Tasks
                                             INNER JOIN Status ON Tasks.statusID = Status.statusId
@@ -115,8 +138,9 @@ function getProjectsProgress()
                                             where name = 'in progress'
                                             group by Tasks.projectID, name
                                             ) INPROGRESS ON Tasks.projectID = INPROGRESS.projectID
+                                WHERE Team.userID=?
                                 group by projectID");
-    $statement->execute();
+    $statement->execute([$userID]);
     $results = $statement->fetchAll(PDO::FETCH_CLASS, 'Progress');
     foreach ($results as $project) {
         $sum = $project->toDo + $project->done + $project->inProgress;
@@ -182,7 +206,7 @@ function getTeamByProjectID($projectID)
                                 ON Team.userID = User.userID 
                                 INNER JOIN Role
                                 ON Team.roleID=Role.roleID
-                                WHERE projectid= ?');
+                                WHERE projectID= ?');
     $statement->execute([$projectID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Team');
 }
@@ -279,15 +303,14 @@ function addNewUser($email, $password, $name, $surname)
         ->execute([$name, $surname, $email]);
 
     return $result && addUserPasswordByEmail($email, $password);
-
 }
 
 function addUserPasswordByEmail($email, $password)
 {
 
     global $pdo;
-    $passwordHash=password_hash($password, PASSWORD_DEFAULT);
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     return $pdo->prepare(" INSERT INTO UserP (userID,password) 
                     VALUES ((select userID from User where email=?),?)")
-        ->execute([$email,$passwordHash]);
+        ->execute([$email, $passwordHash]);
 }

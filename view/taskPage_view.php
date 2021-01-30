@@ -18,11 +18,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="nav nav-tabs">
                 <li li class="nav-item">
                     <form method="post" action="../controller/tasksList.php">
-                        <input type="hidden" name="projectID" value="<?= $project->projectid ?>">
+                        <input type="hidden" name="projectID" value="<?= $project->projectID ?>">
                         <button type="submit" class="btn-lg btn-light nav-link">Project</button>
                     </form>
                 </li>
@@ -32,6 +32,11 @@
                 <li class="nav-item">
                     <button class="btn-lg btn-light nav-link" data-toggle="modal" data-target="#editStatus">Status</button>
                 </li>
+            </ul>
+            <ul class="nav nav-tabs">
+                <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#logout">
+                    Log out
+                </button>
             </ul>
         </div>
     </nav>
@@ -75,7 +80,7 @@
                 </ul>
                 <form method="POST">
                     <div class="d-flex justify-content-end">
-                        <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                        <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
                         <textarea class="form-control" rows="2" name="commentText" placeholder="add comment"></textarea>
                         <button type="submit" class="btn btn-dark card-link">Send</button>
                     </div>
@@ -97,7 +102,7 @@
                 </div>
                 <div class="modal-body">
                     <form method="post">
-                        <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                        <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
                         <label>Description</label><br />
                         <textarea class="form-control" rows="6" name="Description"><?= $task->description ?></textarea><br />
                         <input type="submit" class="btn btn-success" />
@@ -118,7 +123,7 @@
                 </div>
                 <div class="modal-body">
                     <form method="post">
-                        <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                        <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
                         <label>Status</label><br />
                         <select class="form-control" id="cars" name="statusID">
                             <option value="1">In Progress</option>
@@ -162,7 +167,7 @@
                     </table>
                     <form method="post">
                         <div>
-                            <input type="hidden" name="taskID" value="<?= $task->taskid ?>">
+                            <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>
                             <select class="custom-select my-1 mr-sm-2" name="userID" id="inlineFormCustomSelectPref">
                                 <?php foreach ($team as $teamMember) : ?>
@@ -171,6 +176,28 @@
                             </select>
                             <button type="submit" class="btn btn-primary">Change</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal Form Logout-->
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">LogOut</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="logout.php">
+
+                        <P>Are you sure that you want to Log out</P>
+
+                        <button type="submit" class="btn btn-secondary" >Yes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
                     </form>
                 </div>
             </div>

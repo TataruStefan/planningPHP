@@ -1,6 +1,6 @@
 <?php
 class Project {
-  private $projectid;
+  private $projectID;
   private $title;
   private $vision;
   private $tasks;
