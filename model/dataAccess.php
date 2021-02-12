@@ -26,7 +26,7 @@ function addProject($project, $userID)
     $pdo->prepare(" INSERT INTO Project (Title,Vision) 
                     VALUES (?,?)")
         ->execute([$project->title, $project->vision]);
-    addTeam($pdo->lastInsertId(), $userID);
+    addTeam($pdo->lastInsertId(), $userID, 2);
 }
 function addTeam($projectID, $userID)
 {
@@ -47,7 +47,7 @@ function getTasksByProjectID($projectID)
     $statement->execute([$projectID]);
     return $statement->fetchAll(PDO::FETCH_CLASS, 'Task');
 }
-function getTasksByProjectIDAndUserID($projectID,$userID)
+function getTasksByProjectIDAndUserID($projectID, $userID)
 {
     global $pdo;
     $statement = $pdo->prepare('SELECT taskID, title, name as status 
@@ -67,12 +67,12 @@ function getprojectbyID($projectID)
     $statement->execute([$projectID]);
     return $statement->fetchObject('Project');
 }
-function addTask($task)
+function addTask($task, $userID)
 {
     global $pdo;
     $pdo->prepare(" INSERT INTO Tasks (projectID,title, description, statusID, assigneeID) 
-                    VALUES (?,?,?,3,1)")
-        ->execute([$task->projectID, $task->title, $task->description]);
+                    VALUES (?,?,?,3,?)")
+        ->execute([$task->projectID, $task->title, $task->description, $userID]);
 }
 function getTaskByID($taskID)
 {

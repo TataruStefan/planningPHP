@@ -22,7 +22,7 @@ if (isset($_REQUEST["email"]) &&  isset($_REQUEST["password"])) {
         $user = getUserByEmail(trim($_POST["email"]));
 
         if ($user == "empty") {
-            phpAlert("Incorrect email");
+            phpAlert("Invalid credentials");
         } else if (password_verify(trim($_POST["password"]), $user->password) ) {
             // Password is correct, so start a new session
             session_start();
@@ -34,7 +34,7 @@ if (isset($_REQUEST["email"]) &&  isset($_REQUEST["password"])) {
             // Redirect user to welcome page
             header("location: projectList.php");
         } else {
-            phpAlert("Oops! Something went wrong. Please try again later.");
+            phpAlert("Invalid credentials");
         }
     }
 }

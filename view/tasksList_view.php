@@ -147,6 +147,7 @@
                     </table>
                     <form method="post">
                         <div>
+                            <input type="hidden" name="projectID" value="<?= $project->projectID ?>">
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="To add member enter email">
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>
                             <select class="custom-select my-1 mr-sm-2" name="roleID" id="inlineFormCustomSelectPref">
@@ -177,7 +178,7 @@
 
                         <P>Are you sure that you want to Log out</P>
 
-                        <button type="submit" class="btn btn-secondary" >Yes</button>
+                        <button type="submit" class="btn btn-secondary">Yes</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
                     </form>
                 </div>

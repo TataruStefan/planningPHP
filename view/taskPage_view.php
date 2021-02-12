@@ -167,7 +167,7 @@
                     <form method="post">
                         <div>
                             <input type="hidden" name="taskID" value="<?= $task->taskID ?>">
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Role</label>
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Team</label>
                             <select class="custom-select my-1 mr-sm-2" name="userID" id="inlineFormCustomSelectPref">
                                 <?php foreach ($team as $teamMember) : ?>
                                     <option value=<?= $teamMember->userID ?>><?= $teamMember->name ?> <?= $teamMember->email ?></option>

@@ -29,7 +29,7 @@ if (isset($_REQUEST["Title"])) {
   $task->description = htmlentities($description);
   $task->projectID = htmlentities($projectID);
 
-  addTask($task);
+  addTask($task,$_SESSION["userID"]);
 }
 $tasks = array();
 if (isset($_REQUEST["taskName"]) && $_REQUEST["taskName"] != "") {
